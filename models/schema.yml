@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: src_chats
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: created_at_tz
+        tests:
+          - not_null
+  - name: src_categories
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

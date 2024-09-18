@@ -1,0 +1,7 @@
+version: 1
+
+sources:
+  - name: customer_chat
+    tables:
+      - name: de_test_categories
+      - name: de_test_chats
