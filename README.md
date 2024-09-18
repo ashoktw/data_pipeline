@@ -1,16 +1,17 @@
 
 
 ## Data Governance
-We need to have Data Governance in place to make sure that the data that we store and use is secure, private, accurate, available and usable.
+We need to have Data Governance in place to make sure that the data that we store and use is secure, private, accurate, available and usable. 
 
 ## Quality
 To have a proper analysis done, we need to be sure that the data that is used for the analysis is of high quality. 
 
-We can setup data quality checks to continuously monitor the data. First we need to define what are the expected formats and values for each of the columns.
+We can setup data quality checks to continuously monitor the data. First we need to define what are the expected formats and values for each of the columns. This needs to be reviewed frequently for updates to the rules as it could change in time when new data comes in.
 
 1.  How would you measure the overall data quality of these files?
     
     Establish key performance indicators to measure the data quality like accuracy, completeness and accuracy.
+    Decide what is the acceptable level for these and setup notification when it goes below the threshold. 
 
 2. What measures would you put in place to identify issues which would effect data quality?
 
@@ -32,7 +33,8 @@ We can setup data quality checks to continuously monitor the data. First we need
 ## Sensitivity
 
 1.  What measures will need to be taken in controlling access to this open text data?
-    Setup access to the GCS Buckets to provide access only to a group 
+
+    Setup access to the GCS Buckets to provide access only to a group of people. Make sure to revoke the access to a person when they no longer need the access. Even before that, decide whether anyone apart from the service account which creates the BigQuery table needs access to the raw files. If that is the case, we can provide access only to the service account which creates the BigQuery table from the raw csv files and make sure that the service account is not reused in any other service. 
     
 
 2. What measures would you put in place regarding its secure storage?
@@ -46,7 +48,7 @@ We can setup data quality checks to continuously monitor the data. First we need
 3. If redaction of sensitive text was necessary, how would you tackle it?
     
     Since we have our data stored in GCS buckets and we create a BigQuery table to handle the data, we can use the GCP native Cloud Data Loss Prevention (DLP) to detect and redact sensitive information. If cost needs to be in check, we can use Named Entity Recognition (NER) to scan the text and find any sensitive information.
-    
+
 
 ## Data Pipeline
 To build the data pipeline, we could have multiple options using different tech stacks.
@@ -83,6 +85,7 @@ For our project we would use Option 5.
 To keep the setup simple, we could use BigQuery Data Transfer Service. Whenever files are placed in the Cloud Storage Bucket the service can be scheduled to process the files and append the entries to the existing BigQuery Tables. 
 
 Below Diagram shows the flow. 
+
 ![BQ Data Transfer](bq_data_transfer.jpg)
 
 I have written an article explaining about BigQuery Data Transfer service in detail which can used as reference.
@@ -122,4 +125,4 @@ These are the below items which we can include if more time is spent and also in
 
 3. We could use Terraform to manage the infra needed for our project and use GitHub Actions for the CI/CD needed
 
-4. 
+4. For our dbt application, we could have created more reusable code as macros so that all common logic are at one place.
